@@ -1,0 +1,8 @@
+{
+  "name": "convertRAWtoPNGs",
+  "version": "1.0",
+  "description": "Convert RAW 16 bpp thermal images to PNG images.",
+  "dependencies": {
+    "pngjs": "^6.0.0"
+  }
+}
