@@ -1,0 +1,7 @@
+yombir
+
+./videos/*
+!./videos/README.md
+
+./captures/*
+!./captures/README.md
