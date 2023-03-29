@@ -1,7 +1,7 @@
 yombir
 
-./videos/*
-!./videos/README.md
+videos/*
+!videos/README.md
 
-./captures/*
-!./captures/README.md
+captures/*
+!captures/README.md
