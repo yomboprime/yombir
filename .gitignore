@@ -1,5 +1,7 @@
 yombir
 
+**/**/node_modules
+
 videos/*
 !videos/README.md
 
