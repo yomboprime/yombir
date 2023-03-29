@@ -42,11 +42,11 @@ Each file is just the captured raw frames at 16 bpp, one after the another at 24
 
 # How to convert recordings to mp4 videos
 
-See [./utils/README.md] on how to convert the recorded .t16 files to .mp4 videos.
+See [./utils/README.md](./utils/README.md) on how to convert the recorded .t16 files to .mp4 videos.
 
 # How to change the color palette
 
-See [./gradients/README.md].
+See [./gradients/README.md](./gradients/README.md).
 
 # Known issues
 
