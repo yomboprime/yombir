@@ -31,7 +31,6 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <opencv2/core/utils/logger.hpp>
 
 // Types
 
@@ -203,9 +202,6 @@ bool initVideoCapture( std::string devicePath, std::string &error ) {
 			return false;
 	}
 
-	// Set v4l log silent
-	initLogger( -1 );
-
 	// Open video device
 	V4L2DeviceParameters videoCaptureParams(
 		captureParams.devicePath.c_str(),
@@ -319,26 +315,26 @@ void convertThermalGray16LEToRGB( int width, int height, const uint16_t *frameCo
 
 bool initGraphics( std::string &error ) {
 
-	displayWidth = 400;
-	displayHeight = 300;
+	displayWidth = 720;
+	displayHeight = 1440;
 
 	displaySizeBytes = displayWidth * displayHeight * 3;
 	frameBufferRGB = new uint8_t[ displaySizeBytes ];
 	memset( frameBufferRGB, 0x85, displaySizeBytes );
 
 	gradientRGB = new uint8_t[ gradientWidth * 3 ];
-	FILE *f = fopen( "./gradients/gradient.bin", "r+" );
+	FILE *f = fopen( "../gradients/gradient.bin", "r+" );
 	if ( ! f || fread( gradientRGB, gradientWidth * 3, 1, f ) != 1 ) {
 		if ( f ) fclose( f );
-		error = "Couldn't load './gradients/gradient.bin.'";
+		error = "Couldn't load '../gradients/gradient.bin.'";
 		return false;
 	}
 	fclose( f );
 
-	cv::utils::logging::setLogLevel( cv::utils::logging::LOG_LEVEL_SILENT );
+	//cv::utils::logging::setLogLevel( cv::utils::logging::LOG_LEVEL_SILENT );
 
-	iconPause = cv::imread( "./icons/pause.png" );
-	iconRecord = cv::imread( "./icons/record.png" );
+	iconPause = cv::imread( "../icons/pause.png" );
+	iconRecord = cv::imread( "../icons/record.png" );
 
 	cv::namedWindow( "yombir", cv::WINDOW_NORMAL );
 
@@ -358,11 +354,18 @@ void repaint() {
 	// Create cv::Mat from thermal image buffer
 	cv::Mat thermalImageMat( captureParams.yResolution, captureParams.xResolution, CV_8UC3, thermalImageRGB );
 
+	cv::rotate( thermalImageMat, thermalImageMat, cv::ROTATE_90_CLOCKWISE );
+
 	// Create cv:Mat from frameBuffer
 	cv::Mat frameBufferMat( displayHeight, displayWidth, CV_8UC3, frameBufferRGB );
 
 	// Paint thermal image in framebuffer
-	cv::resize( thermalImageMat, frameBufferMat, frameBufferMat.size() );
+	//cv::resize( thermalImageMat, frameBufferMat, frameBufferMat.size() );
+	float fy0 = ( 4.0f / 3.0f ) * ((float)thermalImageMat.rows) / ((float)thermalImageMat.cols);
+	float fy1 = ((float)frameBufferMat.cols) / ((float)frameBufferMat.rows);
+	float fy = fy0 * fy1;
+	//float fy = ( 256.0f / 192.0f ) * 720.0f;
+	cv::resize( thermalImageMat, frameBufferMat, cv::Size(), 1.0f, fy );
 
 	// Paint icons
 	if ( isRecording ) {
@@ -393,7 +396,7 @@ void initRecording() {
 
 	// Read sequence number from file
 	int64_t sequence = 1;
-	const char *sequenceFilePath = "./captures/sequence.txt";
+	const char *sequenceFilePath = "../captures/sequence.txt";
 	FILE *seqFile = fopen( sequenceFilePath, "r+" );
 	if ( seqFile ) {
 		size_t n = 200;
@@ -431,7 +434,7 @@ void initRecording() {
 	else printErrorAndExit( "Could not open for write sequence file." );
 
 	// Open video file for write
-	std::string recordFilePath = std::string( "./captures/" ) + std::to_string( sequence ) + std::string( ".t16" );
+	std::string recordFilePath = std::string( "../captures/" ) + std::to_string( sequence ) + std::string( ".t16" );
 	recordFile = fopen( recordFilePath.c_str(), "w+" );
 	if ( ! recordFile ) {
 		printErrorAndExit( std::string( "Could not open record file for writing." ) );

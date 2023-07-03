@@ -20,6 +20,21 @@ const colors = [
 	createRGBT( 255, 255, 255,	150 )
 ];
 
+// These colors are more suitable to analize a FDM 3d printer or similar temperatures (not tested):
+/*
+const colors = [
+	createRGBT( 0, 0, 0,		10 ),
+	createRGBT( 0, 0, 255,		15 ),
+	createRGBT( 0, 255, 255,	20 ),
+	createRGBT( 0, 255, 0,		25 ),
+	createRGBT( 255, 255, 0,	30 ),
+	createRGBT( 255, 128, 0,	35 ),
+	createRGBT( 255, 0, 0,		150 ),
+	createRGBT( 255, 0, 255,	220 ),
+	createRGBT( 255, 255, 255,	240 )
+];
+*/
+
 const rgbBuffer = Buffer.alloc( 3 * width );
 
 let p = 0;

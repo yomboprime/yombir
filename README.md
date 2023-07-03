@@ -1,7 +1,13 @@
 
 # Yombir
 
-Native C++ app for the Topdon TC-001 and the Infiray P2 and similar thermal image cameras.
+Native C++ app for the Topdon TC-001 and the Infiray P2 and similar thermal image USB cameras that use the Infiray Tiny1-B Micro LWIR Thermal Module.
+
+Tested on:
+
+- x86 PC
+- Raspberry Pi 4B
+- Pine64 Pinephone Pro
 
 # License
 
@@ -11,17 +17,24 @@ Licensed under GPL2.0
 
 ## Linux
 
-Requirements: libv4l2-dev libopencv-core libopencv-imgproc libopencv-highgui libopencv-codecs lopencv_imgcodecs
+Requirements: In summary, OpenCV and libV4Linux.
+
+```
+libv4l2-dev libopencv-core libopencv-imgproc libopencv-highgui libopencv-codecs lopencv_imgcodecs
+```
 
 To build:
 
 ```
+mkdir build
+cd build
+cmake ..
 make
 ```
 
 ## Other systems
 
-TODO
+TODO - Not tested.
 
 # How to use
 

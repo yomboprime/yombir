@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Usage: From the top folder of yombir repository:
 # ./utils/convert_t16_to_mp4.sh <video_number> <rotation> <resolution multiplier>
 # Where:
@@ -58,4 +56,4 @@ fi
 
 cd ../..
 
-//rm ${pngsPath}/*.png
+rm ${pngsPath}/*.png
