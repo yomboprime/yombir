@@ -1,5 +1,5 @@
 
-# How to generate different gradient palettes
+## How to generate different gradient palettes
 
 You can generate a different thermal gradient palette by changing the values in the ```colors``` array, at the top of the ```yombir/gradients/generateGradient.js``` file:
 
@@ -27,6 +27,6 @@ After changing the color you must regenerate the ```gradient.bin``` file (Node.j
 
 The ```gradient.bin``` file in this directory is the one used in the viewer/recorder app, and in the mp4 conversion utility in ```yombir/utils/convertRAWtoPNGs.js```.
 
-# Format of the gradient.bin file
+## Format of the gradient.bin file
 
-1 row of 65536 pixels, 3 bytes per pixel (R, G and B)
+1 row of 65536 pixels, 3 bytes per pixel (R, G and B), from lowest to higuest temperature.
