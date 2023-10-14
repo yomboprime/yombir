@@ -32,6 +32,11 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
+// Defines
+
+const int THERMAL_IMAGE_WIDTH = 256;
+const int THERMAL_IMAGE_HEIGHT = 192;
+
 // Types
 
 enum PixelFormat {
@@ -159,6 +164,7 @@ int main( int argc, char** argv ) {
 		numFrame++;
 
 	}
+
 	finishGraphics();
 	closeVideoCapture();
 
@@ -179,7 +185,7 @@ void printErrorAndExit( std::string error ) {
 
 bool initVideoCapture( std::string devicePath, std::string &error ) {
 
-	captureParams = VideoCaptureParams( devicePath, PixelFormat::THERMAL_GRAY16LE, 256, 384, 24 );
+	captureParams = VideoCaptureParams( devicePath, PixelFormat::THERMAL_GRAY16LE, THERMAL_IMAGE_WIDTH, THERMAL_IMAGE_HEIGHT * 2, 24 );
 
 	const char *fcc = NULL;
 	int imageYRes = captureParams.yResolution;
@@ -315,12 +321,39 @@ void convertThermalGray16LEToRGB( int width, int height, const uint16_t *frameCo
 
 bool initGraphics( std::string &error ) {
 
-	displayWidth = 720;
-	displayHeight = 1440;
+	// Get screen resolution from config
+
+	const char *configFilePath = "../config/screen_resolution.txt";
+	FILE *fConfig = fopen( configFilePath, "r+" );
+	if ( ! fConfig ) {
+		error = "Couldn't load '" + std::string( configFilePath ) + std::string( "'" );
+		return false;
+	}
+
+	size_t n = 200;
+	char *line = (char *)malloc( n );
+	line[ 0 ] = 0;
+	long w = 0;
+	long h = 0;
+	if ( getline( &line, &n, fConfig ) >= 1 ) {
+		if ( sscanf( line, "%lu %lu", &w, &h ) != 2 ) {
+			w = 1;
+			h = 1;
+		}
+	}
+	free( line );
+	fclose( fConfig );
+
+	displayWidth = h;
+	displayHeight = w;
+
+	// Create framebuffer
 
 	displaySizeBytes = displayWidth * displayHeight * 3;
 	frameBufferRGB = new uint8_t[ displaySizeBytes ];
 	memset( frameBufferRGB, 0x85, displaySizeBytes );
+
+	// Load gradient file
 
 	gradientRGB = new uint8_t[ gradientWidth * 3 ];
 	FILE *f = fopen( "../gradients/gradient.bin", "r+" );
@@ -333,8 +366,12 @@ bool initGraphics( std::string &error ) {
 
 	//cv::utils::logging::setLogLevel( cv::utils::logging::LOG_LEVEL_SILENT );
 
+	// Load icons
+
 	iconPause = cv::imread( "../icons/pause.png" );
 	iconRecord = cv::imread( "../icons/record.png" );
+
+	// Create window
 
 	cv::namedWindow( "yombir", cv::WINDOW_NORMAL );
 
@@ -367,7 +404,7 @@ void repaint() {
 	//float fy = ( 256.0f / 192.0f ) * 720.0f;
 	cv::resize( thermalImageMat, frameBufferMat, cv::Size(), 1.0f, fy );
 
-	// Paint icons
+	// Paint UI
 	if ( isRecording ) {
 
 		if ( int( floor( 2 * numFrame / captureParams.fps ) ) & 1 ) paintMatInMat( &iconRecord, 10, 10, &frameBufferMat );

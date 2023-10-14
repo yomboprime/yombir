@@ -36,6 +36,10 @@ make
 
 TODO - Not tested.
 
+## Configuration
+
+Set the width and height of your screen in ```./config/screen_resolution.txt```. By default it is ```1440 720```.
+
 ## How to use
 
 ```./yombir [camera device path] [r]```
