@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.6)
 # Define yombir project
 project( yombir VERSION 0.0.1 DESCRIPTION "Native C++ app for thermal image USB cameras that use the Infiray Tiny1-B Micro LWIR Thermal Module." )
 
-# Include Ceres engine sources
+# Include yombir sources
 include_directories( ${PROJECT_SOURCE_DIR}/src )
 file( GLOB_RECURSE ceresSources
     src/*.h
