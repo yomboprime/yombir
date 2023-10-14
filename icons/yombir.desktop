@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Yombir
+Exec=/home/mobian/yombir/yombir /dev/video12 r
+Icon=/home/mobian/yombir/yombir.svg
+Terminal=false
+Type=Application
