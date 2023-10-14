@@ -520,6 +520,10 @@ void processKey( int key ) {
 			terminate = true;
 			break;
 
+		case 'r':
+			rotate180 = ! rotate180;
+			break;
+
 		case 'v':
 			// TODO: Cycle gradient color?
 			break;

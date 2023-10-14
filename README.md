@@ -53,6 +53,7 @@ When running, the app will  display the thermal image in fullscreen. The first t
 Control keys:
 - Press SPACEBAR to exit the app.
 - Press ENTER to toggle recording of video.
+- Press R to toggle the screen rotation (as in the 'r' command parameter)
 
 When recording, a blinking red circle will appear. Recordings are saved to ```./captures``` folder with .t16 extension (from "Thermal 16 bpp")
 Each file is just the captured raw frames at 16 bpp, one after the another at 24 FPS (about 2 MB/second). Resolution is 256x192.
