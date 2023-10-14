@@ -9,18 +9,18 @@ Tested on:
 - Raspberry Pi 4B
 - Pine64 Pinephone Pro
 
-# License
+## License
 
 Licensed under GPL2.0
 
-# Building the app
+## Building the app
 
-## Linux
+### Linux
 
 Requirements: In summary, OpenCV and libV4Linux.
 
 ```
-libv4l2-dev libopencv-core libopencv-imgproc libopencv-highgui libopencv-codecs lopencv_imgcodecs
+libv4l2-dev libopencv-core libopencv-imgproc libopencv-highgui libopencv-codecs libopencv-imgcodecs
 ```
 
 To build:
@@ -32,11 +32,11 @@ cmake ..
 make
 ```
 
-## Other systems
+### Other systems
 
 TODO - Not tested.
 
-# How to use
+## How to use
 
 ```./yombir [camera device path] [r]```
 
@@ -53,19 +53,19 @@ Control keys:
 When recording, a blinking red circle will appear. Recordings are saved to ```./captures``` folder with .t16 extension (from "Thermal 16 bpp")
 Each file is just the captured raw frames at 16 bpp, one after the another at 24 FPS (about 2 MB/second). Resolution is 256x192.
 
-# How to convert recordings to mp4 videos
+## How to convert recordings to mp4 videos
 
 See [./utils/README.md](./utils/README.md) on how to convert the recorded .t16 files to .mp4 videos.
 
-# How to change the color palette
+## How to change the color palette
 
 See [./gradients/README.md](./gradients/README.md).
 
-# Known issues
+## Known issues
 
 I don't set any parameters via USB. Perhaps for this reason the camera sometimes readjusts the range or the optics by itself making an audible clic, and stopping transmitting for less than a second.
 
-# Acknowledgements
+## Acknowledgements
 
 People at eevblog.com forums for the reverse engineering of the camera's video format.
 

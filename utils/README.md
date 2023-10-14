@@ -1,9 +1,9 @@
 
-# convert_t16_to_mp4.sh
+## convert_t16_to_mp4.sh
 
 This script converts a raw ```.t16``` file stored in ```../captures``` to ```.mp4``` video file.
 
-# Requirements
+## Requirements
 
 This ```.sh``` script uses the Node.js script in ```./convertRAWtoPNGs```, so Node.js needs to be installed (https://nodejs.org)
 
@@ -12,7 +12,7 @@ After that, run this command in the ```./convertRAWtoPNGs```folder  to install t
 
 Also, ffmpeg needs to be installed.
 
-# Usage
+## Usage
 
 Usage: From the top folder of yombir repository, do the following command:
 ```./utils/convert_t16_to_mp4.sh <video_number> <rotation> <resolution multiplier>```
@@ -30,7 +30,7 @@ The output mp4 video will be stored in ```./videos/<video_number>/Thermal_video_
 
 Temporary PNG files under ```./videos/<video_number>/``` will be removed when done.
 
-# Example
+## Example
 
 Convert file 1.t16, landscape, resolution x3:
 ```
