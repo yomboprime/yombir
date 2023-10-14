@@ -20,7 +20,7 @@ Licensed under GPL2.0
 Requirements: In summary, OpenCV and libV4Linux.
 
 ```
-libv4l2-dev libopencv-core libopencv-imgproc libopencv-highgui libopencv-codecs libopencv-imgcodecs
+libv4l2-dev libopencv-dev libopencv-core libopencv-imgproc libopencv-highgui libopencv-codecs libopencv-imgcodecs
 ```
 
 To build:
