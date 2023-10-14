@@ -8,6 +8,7 @@ console.log( "Writing " + outFilePath + "..." );
 
 const width = 65536;
 
+// Animal range:
 const colors = [
 	createRGBT( 0, 0, 0,		10 ),
 	createRGBT( 0, 0, 255,		15 ),
@@ -19,6 +20,22 @@ const colors = [
 	createRGBT( 255, 0, 255,	100 ),
 	createRGBT( 255, 255, 255,	150 )
 ];
+
+
+// Ice range
+/*
+const colors = [
+	createRGBT( 0, 0, 0,		- 10 ),
+	createRGBT( 0, 0, 255,		- 7 ),
+	createRGBT( 0, 255, 255,	- 4 ),
+	createRGBT( 0, 255, 0,		- 1 ),
+	createRGBT( 255, 255, 0,	- 0 ),
+	createRGBT( 255, 128, 0,	10 ),
+	createRGBT( 255, 0, 0,		20 ),
+	createRGBT( 255, 0, 255,	50 ),
+	createRGBT( 255, 255, 255,	150 )
+];
+*/
 
 // These colors are more suitable to analize a FDM 3d printer or similar temperatures (not tested):
 /*
