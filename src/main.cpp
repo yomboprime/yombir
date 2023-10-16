@@ -85,6 +85,7 @@ uint16_t *captureBuffer;
 uint16_t *thermalImage16le;
 uint8_t *thermalImageRGB;
 
+bool rotate90 = false;
 bool rotate180 = true;
 
 int displayWidth;
@@ -139,7 +140,8 @@ int main( int argc, char** argv ) {
 	if ( argc > 3 ) printErrorAndExit( std::string( "" ) );
 	std::string devicePath = std::string( "/dev/video0" );
 	if ( argc >= 2 ) devicePath = std::string( argv[ 1 ] );
-	if ( argc >= 3 && argv[ 2 ][ 0 ] == 'r' && argv[ 2 ][ 1 ] == 0 )  rotate180 = false;
+	if ( argc >= 3 && argv[ 2 ][ 0 ] == 'r' && argv[ 2 ][ 1 ] == '9' && argv[ 2 ][ 2 ] == 0 )  rotate90 = true;
+	else if ( argc >= 3 && argv[ 2 ][ 0 ] == 'r' && argv[ 2 ][ 1 ] == 0 )  rotate180 = false;
 
 	std::string error;
 
@@ -179,7 +181,7 @@ void signalHandler( int ) {
 
 void printErrorAndExit( std::string error ) {
 	printf( "\n%s\n", error.c_str() );
-	printf( "\nUsage: ./yombir [video device path] [r]\n    (Default device: /dev/video0)\n    r = rotate screen 180º (only for realtime display, not\n    on recorded files) \n\n");
+	printf( "\nUsage: ./yombir [video device path] [r[9]]\n    (Default device: /dev/video0)\n    r = rotate screen 180º, r9 = rotate 90º (only for realtime display, not\n    on recorded files) \n\n");
 	exit( -1 );
 }
 
@@ -344,8 +346,8 @@ bool initGraphics( std::string &error ) {
 	free( line );
 	fclose( fConfig );
 
-	displayWidth = h;
-	displayHeight = w;
+	displayWidth = w;
+	displayHeight = h;
 
 	// Create framebuffer
 
@@ -391,18 +393,20 @@ void repaint() {
 	// Create cv::Mat from thermal image buffer
 	cv::Mat thermalImageMat( captureParams.yResolution, captureParams.xResolution, CV_8UC3, thermalImageRGB );
 
-	cv::rotate( thermalImageMat, thermalImageMat, cv::ROTATE_90_CLOCKWISE );
+	// Rotation of 90º is made by default. If user wants rotation, don't make default rotation.
+	if ( ! rotate90 ) cv::rotate( thermalImageMat, thermalImageMat, cv::ROTATE_90_CLOCKWISE );
 
 	// Create cv:Mat from frameBuffer
-	cv::Mat frameBufferMat( displayHeight, displayWidth, CV_8UC3, frameBufferRGB );
+	cv::Mat frameBufferMat( displayWidth, displayHeight, CV_8UC3, frameBufferRGB );
 
 	// Paint thermal image in framebuffer
-	//cv::resize( thermalImageMat, frameBufferMat, frameBufferMat.size() );
 	float fy0 = ( 4.0f / 3.0f ) * ((float)thermalImageMat.rows) / ((float)thermalImageMat.cols);
 	float fy1 = ((float)frameBufferMat.cols) / ((float)frameBufferMat.rows);
-	float fy = fy0 * fy1;
-	//float fy = ( 256.0f / 192.0f ) * 720.0f;
-	cv::resize( thermalImageMat, frameBufferMat, cv::Size(), 1.0f, fy );
+	if ( ! rotate90 ) fy1 = 1.0 / fy1;
+	float fy = fy0 / fy1;
+	frameBufferMat.setTo( cv::Scalar( 0, 0, 0 ) );
+	cv::Size size = ! rotate90 ? cv::Size() : cv::Size( displayWidth, displayHeight );
+	cv::resize( thermalImageMat, frameBufferMat, size, 1.0f, fy );
 
 	// Paint UI
 	if ( isRecording ) {
