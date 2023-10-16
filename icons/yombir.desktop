@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Yombir
-Exec=/home/mobian/yombir/build/yombir /dev/video12 r
-Icon=/home/mobian/yombir/yombir.svg
+Exec=/home/mobian/yombir/yombir.sh /dev/video12 r
+Icon=/home/mobian/yombir/icons/appicon/yombir.svg
 Path=/home/mobian/yombir/build
 Terminal=false
 Type=Application
