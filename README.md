@@ -46,11 +46,11 @@ It launches ```./yombir.sh```, which makes use of ```gnome-session-inhibit``` to
 
 # How to use
 
-```./yombir [camera device path] [r]```
+```./yombir [camera device path] [r[9]]```
 
 By default the device is ```/dev/video0```
 
-If r is specified, screen is rotated 180º (only for realtime display, not on recorded files)
+If 'r' is specified, screen is rotated 180º (only for realtime display, not on recorded files). If 'r9' is specified, a rotation of 90º CCW is done instead.
 
 When running, the app will  display the thermal image in fullscreen. The first two seconds will display noise while it stabilizes.
 
