@@ -1,6 +1,6 @@
 
 
-# NOTE: This project has moved to (Codeberg)[https://codeberg.org/yombo/yombir]
+# NOTE: This project has moved to [Codeberg](https://codeberg.org/yombo/yombir)
 
 
 # Yombir
