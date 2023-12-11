@@ -1,4 +1,8 @@
 
+
+# NOTE: This project has moved to (Codeberg)[https://codeberg.org/yombo/yombir]
+
+
 # Yombir
 
 Native C++ app for the Topdon TC-001 and the Infiray P2 and similar thermal image USB cameras that use the Infiray Tiny1-B Micro LWIR Thermal Module.
